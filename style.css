@@ -1,0 +1,207 @@
+.container {
+  box-sizing: border-box;
+  width: 100%;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 50px 50px 50px 50px;
+  overflow: hidden;
+  align-content: center;
+  flex-wrap: nowrap;
+  gap: 10px;
+  position: relative;
+  border-radius: 0px 0px 0px 0px;
+}
+
+.password-generator {
+  width: 100%;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  max-height: 750px;
+  overflow: hidden;
+  padding: 0px 0px 0px 0px;
+  align-content: center;
+  flex-wrap: nowrap;
+  gap: 10px;
+  position: relative;
+  border-radius: 0px 0px 0px 0px;
+}
+
+.column-stack {
+  width: 100%;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  overflow: hidden;
+  padding: 0px 0px 0px 0px;
+  align-content: center;
+  flex-wrap: nowrap;
+  gap: 30px;
+  position: relative;
+  border-radius: 0px 0px 0px 0px;
+}
+
+.input-wrapper {
+  width: 700px;
+  height: min-content;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  overflow: hidden;
+  padding: 0px 0px 0px 0px;
+  align-content: center;
+  flex-wrap: nowrap;
+  position: relative;
+  border-radius: 0px 0px 0px 0px;
+  padding: 10px;
+}
+
+.input-field {
+  width: 600px;
+  height: 64px;
+  display: block;
+  overflow: hidden;
+  position: relative;
+  border: none;
+  background-color: #ebebeb;
+  color: #000000;
+  font-size: 16px;
+  font-weight: 600;
+  border-radius: 20px;
+  padding-left: 20px;
+}
+
+.copy-button {
+  width: 64px;
+  height: 64px;
+  padding: 0;
+  border: none;
+  background-color: #ffffff;
+  border: none;
+}
+
+/* Usar ao clicar no button */
+.copy-button :hover {
+  transform: scale(0.7);
+}
+
+.progress-bar {
+  width: 700px;
+  height: 15px;
+  display: flex;
+  flex-direction: row;
+  justify-content: start;
+  align-items: center;
+  background-color: #f1f1f1;
+  overflow: hidden;
+  padding: 0px 0px 0px 0px;
+  align-content: center;
+  flex-wrap: nowrap;
+  position: relative;
+  border-radius: 20px;
+}
+
+#bar {
+  height: 100%;
+  transition: width 0.3s ease-in-out;
+}
+.weak {
+  background: linear-gradient(to right, red);
+}
+.medium {
+  background: linear-gradient(to right, red, yellow);
+}
+.strong {
+  background: linear-gradient(to right, red, yellow, green  );
+}
+
+.row-stack {
+  width: 100%;
+  flex: 1;
+  /*  height: 1px; */
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  overflow: hidden;
+  padding: 0px 0px 0px 0px;
+  align-content: center;
+  flex-wrap: nowrap;
+  gap: 10px;
+  position: relative;
+  border-radius: 0px 0px 0px 0px;
+}
+
+.config-wrapper {
+  width: 450px;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: start;
+  gap: 20px;
+  background-color: #f1f1f1;
+  position: relative;
+  border-radius: 0px 0px 0px 0px;
+}
+
+.range-label {
+  font-size: 16px;
+  width: auto;
+  height: auto;
+  white-space: pre;
+  font-weight: 700;
+  font-style: normal;
+  font-family: "Atkinson Hyperlegible", "Atkinson Hyperlegible Placeholder",
+    sans-serif;
+  color: #000000;
+  letter-spacing: 0em;
+  line-height: 1.2;
+  position: relative;
+}
+
+.tooltip {
+  content: attr("!");
+  position: relative;
+  display: inline-block;
+  width: 25px; /* Ajuste conforme necessário */
+  height: 25px; /* Ajuste conforme necessário */
+  background-color: #ffffff;
+  border-radius: 50%; /* Cria um círculo */
+}
+
+.tooltip::before {
+  content: "\0021"; /* Código Unicode para ponto de exclamação */
+  position: absolute; /* Define a posição absoluta */
+  top: 50%; /* Posiciona o ponto de exclamação no centro vertical */
+  left: 50%; /* Posiciona o ponto de exclamação no centro horizontal */
+  transform: translate(-50%, -50%);
+}
+
+.tooltip::after {
+  position: absolute;
+  background-color: #333;
+  color: #fff;
+  padding: 4px 8px;
+  border-radius: 4px;
+  white-space: nowrap;
+  top: 0%;
+  left: 50%;
+  transform: translateX(20%);
+  opacity: 0;
+  transition: opacity 0.2s ease;
+  visibility: hidden;
+}
+
+.tooltip:hover::after {
+  opacity: 1;
+  visibility: visible;
+}
