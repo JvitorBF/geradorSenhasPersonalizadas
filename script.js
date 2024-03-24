@@ -65,22 +65,10 @@ function geradorDeSenha(tamanho, categorias, permitirRepeticao) {
 
 const updateProgressBar = (strength) => {
   const progressBar = document.getElementById("bar");
-  const percentual = `${strength}%`;
+  const percentual = `${100 - strength}%`;
 
   console.log(percentual);
   progressBar.style.width = percentual;
-
-  if (strength < 33) {
-    progressBar.classList.add("medium");
-    progressBar.classList.add("weak");
-  } else if (strength < 66) {
-    progressBar.classList.remove("weak");
-    progressBar.classList.remove("strong");
-    progressBar.classList.add("medium");
-  } else {
-    progressBar.classList.remove("medium");
-    progressBar.classList.add("strong");
-  }
 };
 
 const calculatePasswordStrength = (password) => {
@@ -172,6 +160,15 @@ inputsRadio.forEach(function (input) {
     geradorDeSenha(tamanho.value, getCategorias(), permitir_sequencia.checked);
   });
 });
+/* 
+function handleEventListener() {
+  let inputRadio = document.getElementsByName("facilidade");
+  inputRadio.forEach((input) => {
+    input.addEventListener("change", function (e) {
+      geradorDeSenha(tamanho.value, getCategorias(), permitir_sequencia.checked);
+    });
+  });
+} */
 
 const copyButton = document.getElementById("copy-button");
 copyButton.addEventListener("click", () => {

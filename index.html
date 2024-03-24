@@ -8,9 +8,10 @@
   </head>
   <body>
     <div class="container">
-      <div class="password-generator">
-        <div class="column-stack">
-          <form action="#" class="input-wrapper">
+      <div class="column-stack">
+        <h1 class="titulo">Gerador de senhas personalizadas</h1>
+        <div class="form-container">
+          <div class="input-wrapper">
             <input type="text" id="senha" class="input-field" readonly />
             <button
               type="button"
@@ -20,87 +21,142 @@
             >
               <img src="./svg/copy-svgrepo-com.svg" alt="" />
             </button>
-          </form>
+          </div>
           <div class="progress-bar">
             <div class="" id="bar"></div>
           </div>
         </div>
-        <div class="row-stack">
-          <div class="config-wrapper">
-            <p class="range-label">Número de caracteres para a senha:</p>
-            <input
-              type="number"
-              value="8"
-              min="8"
-              max="50"
-              id="rangeDisplay"
-              class="range-display"
-            />
-            <input
-              type="range"
-              id="rangeBar"
-              value="8"
-              class="range-bar"
-              min="8"
-              max="50"
-            />
-            <input type="checkbox" name="sequencia" id="sequencia">
-            <label for="sequencia">Permitir caracter sequencial</label>
+      </div>
+      <div class="row-stack">
+        <div class="config-wrapper">
+          <h3 class="config-name">Tamanho da senha</h3>
+          <div class="config-group">
+            <div class="config-item">
+              <div class="display-container">
+                <p class="range-label">Núm:</p>
+                <input
+                  type="number"
+                  value="8"
+                  min="8"
+                  max="50"
+                  id="rangeDisplay"
+                  class="range-display"
+                />
+              </div>
+              <div class="range-bar-container">
+                <input
+                  type="range"
+                  id="rangeBar"
+                  value="8"
+                  class="range-bar"
+                  min="8"
+                  max="50"
+                />
+              </div>
+            </div>
+            <div class="checkbox-wrapper">
+              <input
+                type="checkbox"
+                name="sequencia"
+                id="sequencia"
+                class="repeat-checkbox"
+              />
+              <label for="sequencia" class="repeat-label"
+                >Permitir caractere sequencial</label
+              >
+            </div>
           </div>
-          <div class="config-wrapper">
+        </div>
+        <div class="config-wrapper">
+          <h3 class="config-name">Dificuldade</h3>
+          <div class="radio-container">
             <input
               type="radio"
               id="pronunciar"
               name="facilidade"
               value="pronunciar"
+              class="input-radio"
             />
-            <label for="pronunciar">Fácil de Pronunciar</label>
+            <label for="pronunciar" class="radio-label"
+              >Fácil de Pronunciar</label
+            >
             <span
               class="tooltip"
               title="Evite números e caracteres especiais"
             ></span>
-            <input type="radio" id="ler" name="facilidade" value="ler" />
-            <label for="ler">Fácil de Ler</label>
+          </div>
+          <div class="radio-container">
+            <input
+              type="radio"
+              id="ler"
+              name="facilidade"
+              value="ler"
+              class="input-radio"
+            />
+            <label for="ler" class="radio-label">Fácil de Ler</label>
             <span
               class="tooltip"
               title="Evite caracteres ambíguos como I, l('L'), 1, O e 0"
             ></span>
-            <input type="radio" id="todos" name="facilidade" value="todos" />
-            <label for="todos">Todos os Caracteres</label>
+          </div>
+          <div class="radio-container">
+            <input
+              type="radio"
+              id="todos"
+              name="facilidade"
+              value="todos"
+              class="input-radio"
+            />
+            <label for="ler" class="radio-label">Todos Caracteres</label>
             <span
               class="tooltip"
-              title="Qualquer combinação de caracteres como !, 7, h, K e l1"
+              title="Evite caracteres ambíguos como I, l('L'), 1, O e 0"
             ></span>
           </div>
-          <div class="config-wrapper">
+        </div>
+        <div class="config-wrapper">
+          <h3 class="config-name">Categoria</h3>
+          <div class="checkbox-container">
             <input
               type="checkbox"
               id="maiuscula"
               name="categoria"
               value="maiuscula"
+              class="checkbox-input"
             />
             <label for="maiuscula">Letra Maiúscula</label>
+          </div>
+          <div class="checkbox-container">
             <input
               type="checkbox"
               id="minuscula"
               name="categoria"
               value="minuscula"
+              class="checkbox-input"
             />
-            <label for="minuscula">Letra Minúscula</label>
+            <label for="minuscula" class="checkbox-label"
+              >Letra Minúscula</label
+            >
+          </div>
+          <div class="checkbox-container">
             <input
               type="checkbox"
               id="numeros"
               name="categoria"
               value="numeros"
+              class="checkbox-input"
             />
-            <label for="numeros">Números</label>
+            <label for="numeros" class="checkbox-label">Números</label>
+          </div>
+          <div class="checkbox-container">
             <input
               type="checkbox"
               id="simbolos"
               name="categoria"
               value="simbolos"
+              class="checkbox-input"
             />
-            <label for="simbolos">Símbolos</label>
+            <label for="simbolos" class="checkbox-label">Símbolos</label>
           </div>
         </div>
       </div>
