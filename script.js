@@ -1,25 +1,4 @@
-let inputsRadio = document.querySelectorAll('input[type="radio"]');
-let checkboxRadio = Array.from(
-  document.querySelectorAll('input[type="checkbox"]')
-);
-let inputSenha = document.getElementById("senha");
-let tamanho = document.getElementById("rangeBar");
-let visor = document.getElementById("senha");
-const permitir_sequencia = document.getElementById("sequencia");
-
-/* Integração do rangeBar com o rangeValueDisplay */
-tamanho.addEventListener("input", function (e) {
-  let rangeValue = e.target.value;
-  let valueDisplay = document.getElementById("rangeDisplay");
-  valueDisplay.value = rangeValue;
-  geradorDeSenha(tamanho.value, getCategorias(), permitir_sequencia.checked);
-});
-
-window.addEventListener("load", function () {
-  document.getElementById("pronunciar").click();
-});
-
-function geradorDeSenha(tamanho, categorias, permitirRepeticao) {
+function passwordGenerator(tamanho, categories) {
   const categoriasPossiveis = {
     maiuscula: "ABCDEFGHIJKLMNOPQRSTUVWXYZ",
     minuscula: "abcdefghijklmnopqrstuvwxyz",
@@ -27,19 +6,21 @@ function geradorDeSenha(tamanho, categorias, permitirRepeticao) {
     simbolos: "!@#$%^&*()-=_+[]{}|;:,.<>?",
   };
 
-  let caracteresDisponiveis = "";
+  let availableCharacters = "";
 
-  categorias.forEach((categoria) => {
-    if (categoriasPossiveis[categoria]) {
-      caracteresDisponiveis += categoriasPossiveis[categoria];
+  for (const category in categories) {
+    if (category === "permitirSequencia" && categories[category]) {
+      break;
     }
-  });
+    if (categories[category]) {
+      availableCharacters += categoriasPossiveis[category];
+    }
+  }
 
   const lerSelecionado = document.getElementById("ler").checked;
-  console.log(lerSelecionado);
   // Se "ler" estiver selecionado, remova caracteres ambíguos
   if (lerSelecionado) {
-    caracteresDisponiveis = caracteresDisponiveis.replace(/[Iil10Oo]/g, "");
+    availableCharacters = availableCharacters.replace(/[Iil10Oo]/g, "");
   }
 
   let senha = "";
@@ -50,15 +31,19 @@ function geradorDeSenha(tamanho, categorias, permitirRepeticao) {
     let novoCaractere;
 
     do {
-      randomIndex = Math.floor(Math.random() * caracteresDisponiveis.length);
-      novoCaractere = caracteresDisponiveis[randomIndex];
-    } while (!permitirRepeticao && novoCaractere === ultimoCaractere);
+      randomIndex = Math.floor(Math.random() * availableCharacters.length);
+      novoCaractere = availableCharacters[randomIndex];
+    } while (
+      !categories["permitirSequencia"] &&
+      novoCaractere === ultimoCaractere
+    );
 
     senha += novoCaractere;
     ultimoCaractere = novoCaractere;
   }
 
-  visor.value = senha;
+  let passwordElement = document.getElementById("password");
+  passwordElement.value = senha;
   updateProgressBar(calculatePasswordStrength(senha));
   return senha;
 }
@@ -101,78 +86,83 @@ const calculatePasswordStrength = (password) => {
   return strength;
 };
 
-function valueRadioSelecionado() {
-  let radioSelecionado = document.querySelector('input[type="radio"]:checked');
-  if (radioSelecionado) {
-    return radioSelecionado.value;
-  } else {
-    return null;
+const HandleCategoriesCheckbox = (categoryValue) => {
+  const categoryElements = document.querySelectorAll(
+    'input[type="checkbox"][name="categoria"]'
+  );
+  categoryElements.forEach(function (checkbox) {
+    checkbox.checked = categoryValue[checkbox.value];
+  });
+};
+
+const getCategories = () => {
+  const facility = document.querySelector(
+    "input[name=facilidade]:checked"
+  ).value;
+
+  const categories = {
+    maiuscula: true,
+    minuscula: true,
+    numeros: true,
+    simbolos: true,
+    permitirSequencia: true,
+  };
+
+  if (facility === "pronunciar") {
+    categories.numeros = false;
+    categories.simbolos = false;
   }
-}
 
-function atualizarCheckBoxes(valueCheckbox, status) {
-  checkboxRadio.forEach(function (checkbox) {
-    if (valueCheckbox.includes(checkbox.value)) {
-      checkbox.checked = status;
-    }
+  if (facility === "ler") {
+    categories.simbolos = false;
+  }
+  const allowRepeat = document.getElementById("permitirSequencia");
+  categories[allowRepeat.id] = allowRepeat.checked;
+  HandleCategoriesCheckbox(categories);
+  return categories;
+};
+
+const HandleEventListener = () => {
+  const lengthBar = document.getElementById("rangeBar");
+  lengthBar.addEventListener("input", () => {
+    const lengthDisplay = document.getElementById("rangeDisplay");
+    let length = lengthBar.value;
+    lengthDisplay.value = length;
+    passwordGenerator(lengthBar.value, getCategories());
   });
-}
 
-/* True destiva e False ativa o checkbox  */
-function ativarDestivarCheckBoxes(valueCheckbox, status) {
-  checkboxRadio.forEach(function (checkbox) {
-    if (valueCheckbox.includes(checkbox.value)) {
-      checkbox.disabled = status;
-    }
-  });
-}
-
-function getCategorias() {
-  return checkboxRadio
-    .filter((chk) => chk.checked)
-    .map((checkbox) => checkbox.id);
-}
-
-inputsRadio.forEach(function (input) {
-  input.addEventListener("change", function () {
-    let value = valueRadioSelecionado();
-    atualizarCheckBoxes(
-      ["maiuscula", "minuscula", "numeros", "simbolos"],
-      true
-    );
-    ativarDestivarCheckBoxes(
-      ["maiscula", "minuscula", "numeros", "simbolos"],
-      false
-    );
-
-    if (value === "pronunciar") {
-      console.log("Checkbox maiuscula e minuscula ativos, resto desativado");
-      atualizarCheckBoxes(["numeros", "simbolos"], false);
-      ativarDestivarCheckBoxes(["numeros", "simbolos"], true);
-    }
-
-    if (value === "ler") {
-      atualizarCheckBoxes(["simbolos"], false);
-      ativarDestivarCheckBoxes(["simbolos"], true);
-      ativarDestivarCheckBoxes(["numeros"], false);
-    }
-
-    geradorDeSenha(tamanho.value, getCategorias(), permitir_sequencia.checked);
-  });
-});
-/* 
-function handleEventListener() {
-  let inputRadio = document.getElementsByName("facilidade");
-  inputRadio.forEach((input) => {
-    input.addEventListener("change", function (e) {
-      geradorDeSenha(tamanho.value, getCategorias(), permitir_sequencia.checked);
+  const facilityElements = document.querySelectorAll(
+    'input[type="radio"][name="facilidade"]'
+  );
+  facilityElements.forEach((radioButton) => {
+    radioButton.addEventListener("change", () => {
+      passwordGenerator(lengthBar.value, getCategories());
     });
   });
-} */
 
-const copyButton = document.getElementById("copy-button");
-copyButton.addEventListener("click", () => {
-  const passwordElement = document.getElementById("senha");
-  passwordElement.select();
-  document.execCommand("copy");
+  const categoryElements = document.querySelectorAll(
+    'input[type="checkbox"][name="categoria"]'
+  );
+  categoryElements.forEach((checkbox) => {
+    checkbox.addEventListener("change", () => {
+      passwordGenerator(lengthBar.value, getCategories());
+    });
+  });
+
+  const copyButton = document.getElementById("copy-button");
+  copyButton.addEventListener("click", () => {
+    const passwordElement = document.getElementById("password");
+    passwordElement.select();
+    document.execCommand("copy");
+  });
+};
+
+const onInit = () => {
+  HandleEventListener();
+  passwordGenerator(10, getCategories());
+};
+
+window.addEventListener("load", function () {
+  document.getElementById("pronunciar").click();
+  onInit();
 });
